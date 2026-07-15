@@ -52,13 +52,17 @@ static void logger_task(void *) {
 // ---- web server handlers ----
 
 static void handle_records() {
+    xSemaphoreTake(spiffs_mutex, portMAX_DELAY);
+
     File f = SPIFFS.open(RECORDS_FILE, FILE_READ);
-    if (!f) {
+    if (f) {
+        server.streamFile(f, "application/octet-stream");
+        f.close();
+    } else {
         server.send(404, "text/plain", "No records");
-        return;
     }
-    server.streamFile(f, "application/octet-stream");
-    f.close();
+
+    xSemaphoreGive(spiffs_mutex);
 }
 
 static void handle_trim_records() {
@@ -92,6 +96,7 @@ void initialize_logger() {
 
     xTaskCreate(logger_task, "dht_logger", 4000, NULL, ESP_TASK_PRIO_MAX - 1,
                 NULL);
-    xTaskCreate(server_task, "dht_server", 4096, NULL, ESP_TASK_PRIO_MAX - 1,
-                NULL);
+    xTaskCreatePinnedToCore(server_task, "dht_server", 8192, nullptr,
+                            ESP_TASK_PRIO_MAX - 1, nullptr,
+                            ARDUINO_RUNNING_CORE);
 }
