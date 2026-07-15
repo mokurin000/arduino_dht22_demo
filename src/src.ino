@@ -26,10 +26,10 @@ void setup(void) {
 
     spawn_wifi_task();
     initialize_dht();
-    initialize_logger();
 
     initialize_oled();
     connect_wifi();
+    initialize_logger();
 
     configTime(3600 * 8,                       // UTC+8:00
                0,                              // DST offset
