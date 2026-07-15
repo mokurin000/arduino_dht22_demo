@@ -18,6 +18,8 @@ static WebServer server(8888);
 
 static void logger_task(void *) {
     for (;;) {
+        unsigned long start = millis();
+
         float temperature = getTemperature();
         float humidity = getHumidity();
 
@@ -45,7 +47,9 @@ static void logger_task(void *) {
 
         xSemaphoreGive(spiffs_mutex);
 
-        delay(RECORD_INTERVAL); // wait until next append
+        // wait until next append
+        unsigned long elapsed = millis() - start;
+        delay((elapsed < RECORD_INTERVAL) ? (RECORD_INTERVAL - elapsed) : 0);
     }
 }
 
