@@ -1,3 +1,5 @@
+#pragma once
+
 #include <Adafruit_SSD1306.h>
 
 // 你使用的 OLED 尺寸（最常见的是 128x64）
@@ -6,4 +8,4 @@
 
 extern Adafruit_SSD1306 display;
 
-void initialise_oled();
+void initialize_oled();

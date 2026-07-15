@@ -1,5 +1,6 @@
 #include <time.h>
 
+#include "dht.hpp"
 #include "ssd1306.hpp"
 #include "wifi.hpp"
 
@@ -20,8 +21,9 @@ void setup(void) {
     Serial.println("Start initialization...");
 
     spawn_wifi_task();
+    initialize_dht();
 
-    initialise_oled();
+    initialize_oled();
     connect_wifi();
 
     configTime(3600 * 8,                       // UTC+8:00
@@ -48,6 +50,16 @@ void loop(void) {
     const char *const localtime = get_localtime(timebuf, sizeof(timebuf));
     display.print(' ');
     display.println(localtime);
+
+    display.setTextSize(2);
+    float temp = getTemperature();
+    float humi = getHumidity();
+
+    if (isnanf(temp)) {
+        display.printf("NaN C\n");
+    } else {
+        display.printf("%.1f C\n", temp);
+    }
 
     display.display();
 

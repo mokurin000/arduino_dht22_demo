@@ -1,3 +1,5 @@
+#pragma once
+
 #include <WiFi.h>
 
 #define WIFI_DISCONNECTED (WiFi.status() != WL_CONNECTED)
