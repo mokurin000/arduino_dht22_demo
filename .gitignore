@@ -5,8 +5,7 @@
 
 /src/src.ino.cpp
 
-/records.csv
-/records.html
+/records*
 
 __pycache__
 /.python-version
