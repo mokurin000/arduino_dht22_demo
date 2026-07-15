@@ -1,0 +1,6 @@
+# pioarduino cache directory
+/.pio
+
+/.vscode
+
+/src/src.ino.cpp
