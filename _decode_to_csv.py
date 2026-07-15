@@ -28,10 +28,11 @@ def main():
 
     if len(data) % RECORD_STRUCT.size != 0:
         print(
-            f"Warning: file size ({len(data)}) is not a multiple of "
+            f"Error: file size ({len(data)}) is not a multiple of "
             f"{RECORD_STRUCT.size} bytes.",
             file=sys.stderr,
         )
+        exit(1)
 
     writer = csv.writer(sys.stdout, lineterminator="\n")
     writer.writerow(["localtime", "temperature", "humidity"])

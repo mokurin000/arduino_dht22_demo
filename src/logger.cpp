@@ -45,7 +45,7 @@ static void logger_task(void *) {
 
         xSemaphoreGive(spiffs_mutex);
 
-        delay(300'000); // wait for 5 minutes until next append
+        delay(RECORD_INTERVAL); // wait until next append
     }
 }
 
@@ -79,6 +79,8 @@ static void handle_trim_records() {
 }
 
 static void server_task(void *) {
+    sleep(5000); // waits for initialization
+
     server.on("/records", handle_records);
     server.on("/trim_records", handle_trim_records);
     server.begin();
