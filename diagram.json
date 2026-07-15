@@ -25,11 +25,18 @@
         {
             "type": "wokwi-led",
             "id": "led1",
-            "top": 73.2,
+            "top": -13.2,
             "left": -92.2,
             "attrs": {
                 "color": "red"
             }
+        },
+        {
+            "type": "wokwi-dht22",
+            "id": "dht1",
+            "top": -124.5,
+            "left": 205.8,
+            "attrs": {}
         }
     ],
     "connections": [
@@ -89,6 +96,30 @@
             "led1:C",
             "esp:GND.2",
             "black",
+            [
+                "v0"
+            ]
+        ],
+        [
+            "esp:5V",
+            "dht1:VCC",
+            "red",
+            [
+                "h0"
+            ]
+        ],
+        [
+            "esp:GND.1",
+            "dht1:GND",
+            "black",
+            [
+                "h0"
+            ]
+        ],
+        [
+            "dht1:SDA",
+            "esp:34",
+            "gray",
             [
                 "v0"
             ]
