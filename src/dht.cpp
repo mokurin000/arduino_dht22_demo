@@ -1,4 +1,5 @@
 #include "dht.hpp"
+#include "led.hpp"
 
 static DHT dht(DHT22_DAT_PIN, DHT22);
 
@@ -15,6 +16,8 @@ void dht_loop(void *) {
 
         Temperature.store(temperature, std::memory_order::release);
         Humidity.store(humidity, std::memory_order::release);
+
+        start_flash_light(100, 1);
 
         unsigned long elapsed = millis() - start;
         delay((elapsed < 2000) ? (2000 - elapsed) : 0);
