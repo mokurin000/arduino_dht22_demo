@@ -1,6 +1,7 @@
 #include <time.h>
 
 #include "ssd1306.hpp"
+#include "wifi.hpp"
 
 // SAFETY: this function is neither reentrant nor thread-safe.
 const char *get_localtime(char *buf, size_t buf_len) {
@@ -18,14 +19,15 @@ void setup(void) {
     Serial.begin(115200);
     Serial.println("Start initialization...");
 
+    spawn_wifi_task();
+
     initialise_oled();
+    connect_wifi();
 
     configTime(3600 * 8,                       // UTC+8:00
                0,                              // DST offset
                "203.107.6.88", "47.96.149.233" // Alibaba NTP
     );
-
-    spawn_maimai_check();
 }
 
 void loop(void) {
@@ -33,6 +35,14 @@ void loop(void) {
     display.setCursor(0, 0);
 
     display.setTextSize(1);
+
+    int rssi = WiFi.RSSI();
+    if (!rssi && WIFI_DISCONNECTED) {
+        Serial.println("Start reconnecting...");
+        connect_wifi();
+        Serial.println("Reconnected");
+        return;
+    }
 
     char timebuf[22];
     const char *const localtime = get_localtime(timebuf, sizeof(timebuf));
