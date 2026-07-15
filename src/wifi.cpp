@@ -1,6 +1,6 @@
 #include <atomic>
 
-#include "ssd1306.hpp"
+#include "led.hpp"
 #include "wifi.hpp"
 
 #ifdef USING_WOKWI
@@ -41,13 +41,8 @@ void connect_wifi() {
         ResetWifi.store(true);
 
         int times = 0;
-        display.clearDisplay();
-        display.setCursor(0, 0);
-        display.println("Conn WiFi");
         while (++times < 20 && WIFI_DISCONNECTED) {
-            display.print('.');
-            display.display();
-
+            start_flash_light(250, 1);
             delay(500);
         }
     }
