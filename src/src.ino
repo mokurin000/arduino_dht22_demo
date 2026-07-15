@@ -36,8 +36,6 @@ void loop(void) {
     display.clearDisplay();
     display.setCursor(0, 0);
 
-    display.setTextSize(1);
-
     int rssi = WiFi.RSSI();
     if (!rssi && WIFI_DISCONNECTED) {
         Serial.println("Start reconnecting...");
@@ -48,18 +46,29 @@ void loop(void) {
 
     char timebuf[22];
     const char *const localtime = get_localtime(timebuf, sizeof(timebuf));
+
+    display.setTextSize(1);
+    display.println("");
     display.print(' ');
     display.println(localtime);
+    display.println("");
 
     display.setTextSize(2);
     float temp = getTemperature();
     float humi = getHumidity();
 
     if (isnanf(temp)) {
-        display.printf("NaN C\n");
+        display.printf("  NaN");
     } else {
-        display.printf("%.1f C\n", temp);
+        display.printf("  %2.1f", temp);
     }
+
+    display.setTextSize(1);
+    display.printf(" o");
+    display.setTextSize(2);
+    display.printf("C\n");
+
+    display.printf("  %2.1f %%\n", humi);
 
     display.display();
 
