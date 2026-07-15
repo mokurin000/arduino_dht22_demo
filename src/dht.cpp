@@ -5,15 +5,19 @@ static DHT dht = DHT(DHT22_DAT_PIN, DHT22);
 static std::atomic<float> Temperature{NAN}, Humidity{NAN};
 
 void dht_loop(void *) {
+    delay(2000); // warm up DHT22
+
     for (;;) {
-        // wait for two seconds before first reading
-        delay(2000);
+        unsigned long start = millis();
 
         float temperature = dht.readTemperature();
         float humidity = dht.readHumidity();
 
         Temperature.store(temperature, std::memory_order::release);
         Humidity.store(humidity, std::memory_order::release);
+
+        unsigned long elapsed = millis() - start;
+        delay((elapsed < 2000) ? (2000 - elapsed) : 0);
     }
 }
 

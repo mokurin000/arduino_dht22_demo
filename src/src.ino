@@ -1,6 +1,8 @@
+#include <SPIFFS.h>
 #include <time.h>
 
 #include "dht.hpp"
+#include "logger.hpp"
 #include "ssd1306.hpp"
 #include "wifi.hpp"
 
@@ -20,8 +22,11 @@ void setup(void) {
     Serial.begin(115200);
     Serial.println("Start initialization...");
 
+    SPIFFS.begin(true);
+
     spawn_wifi_task();
     initialize_dht();
+    initialize_logger();
 
     initialize_oled();
     connect_wifi();
