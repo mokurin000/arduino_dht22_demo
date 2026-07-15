@@ -4,3 +4,10 @@
 /.vscode
 
 /src/src.ino.cpp
+
+/records.csv
+/records.html
+
+__pycache__
+/.python-version
+/uv.lock

@@ -1,0 +1,15 @@
+[project]
+name = "arduino-dht22-demo"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "polars>=1.42.1",
+    "pyecharts>=2.1.0",
+]
+
+[tool.uv]
+# index-url 指定包下载的镜像源地址
+# 这里使用北京外国语大学 (BFSU) 的 PyPI 镜像，下载速度更快
+index-url = "https://mirrors.bfsu.edu.cn/pypi/web/simple"
