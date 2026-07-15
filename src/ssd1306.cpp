@@ -9,7 +9,7 @@
 #define OLED_ADDR 0x3C
 
 // 创建 I2C 实例（ESP32 默认使用 Wire，也可以自定义）
-static TwoWire I2CESP32 = TwoWire(0); // I2C0
+static TwoWire I2CESP32(0); // I2C0
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &I2CESP32,
                          -1); // -1 表示不使用 reset 引脚
 

@@ -1,6 +1,6 @@
 #include "dht.hpp"
 
-static DHT dht = DHT(DHT22_DAT_PIN, DHT22);
+static DHT dht(DHT22_DAT_PIN, DHT22);
 
 static std::atomic<float> Temperature{NAN}, Humidity{NAN};
 
