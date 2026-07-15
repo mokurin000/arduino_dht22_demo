@@ -9,4 +9,4 @@ void initialize_dht();
 float getTemperature();
 float getHumidity();
 
-const uint8_t DHT22_DAT_PIN = 34;
+const uint8_t DHT22_DAT_PIN = 17;
