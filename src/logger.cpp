@@ -97,6 +97,6 @@ void initialize_logger() {
     xTaskCreate(logger_task, "dht_logger", 4000, NULL, ESP_TASK_PRIO_MAX - 1,
                 NULL);
     xTaskCreatePinnedToCore(server_task, "dht_server", 8192, nullptr,
-                            ESP_TASK_PRIO_MAX - 1, nullptr,
+                            ESP_TASK_PRIO_MIN + 1, nullptr,
                             ARDUINO_RUNNING_CORE);
 }
