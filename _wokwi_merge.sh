@@ -6,7 +6,7 @@ if [ -d "./.pio/build/wokwi" ]; then
             -o firmware.uf2 \
             --flash-mode qio \
             --format uf2 \
-            0x0 bootloader.bin \
+            0x1000 bootloader.bin \
             0x8000 partitions.bin \
             0x10000 firmware.bin
         mv firmware.uf2 ../../../wokwi/esp32/
