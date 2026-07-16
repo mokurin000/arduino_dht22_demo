@@ -1,4 +1,4 @@
-#include <SPIFFS.h>
+#include <LittleFS.h>
 #include <time.h>
 
 #include "dht.hpp"
@@ -22,7 +22,7 @@ void setup(void) {
     Serial.begin(115200);
     Serial.println("Start initialization...");
 
-    SPIFFS.begin(true);
+    LittleFS.begin(true, "/storage", 1, "storage");
 
     spawn_wifi_task();
     initialize_dht();

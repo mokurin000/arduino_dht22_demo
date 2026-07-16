@@ -1,4 +1,4 @@
-#include <SPIFFS.h>
+#include <LittleFS.h>
 #include <WebServer.h>
 #include <freertos/FreeRTOS.h>
 #include <freertos/semphr.h>
@@ -11,7 +11,7 @@
 static constexpr uint64_t MIN_VALID_TIMESTAMP =
     1767225600ULL; // 2026-01-01 00:00:00 GMT
 
-static SemaphoreHandle_t spiffs_mutex = NULL;
+static SemaphoreHandle_t storage_mutex = NULL;
 static WebServer server(8888);
 
 // ---- record writing ----
@@ -36,16 +36,16 @@ static void logger_task(void *) {
             continue;
         }
 
-        xSemaphoreTake(spiffs_mutex, portMAX_DELAY);
+        xSemaphoreTake(storage_mutex, portMAX_DELAY);
 
-        File f = SPIFFS.open(RECORDS_FILE, FILE_APPEND);
+        File f = LittleFS.open(RECORDS_FILE, FILE_APPEND);
         if (f) {
             record r = {(uint64_t)now, temperature, humidity};
             f.write((uint8_t *)&r, sizeof(r));
             f.close();
         }
 
-        xSemaphoreGive(spiffs_mutex);
+        xSemaphoreGive(storage_mutex);
 
         // wait until next append
         unsigned long elapsed = millis() - start;
@@ -56,9 +56,9 @@ static void logger_task(void *) {
 // ---- web server handlers ----
 
 static void handle_records() {
-    xSemaphoreTake(spiffs_mutex, portMAX_DELAY);
+    xSemaphoreTake(storage_mutex, portMAX_DELAY);
 
-    File f = SPIFFS.open(RECORDS_FILE, FILE_READ);
+    File f = LittleFS.open(RECORDS_FILE, FILE_READ);
     if (f) {
         server.streamFile(f, "application/octet-stream");
         f.close();
@@ -66,18 +66,18 @@ static void handle_records() {
         server.send(404, "text/plain", "No records");
     }
 
-    xSemaphoreGive(spiffs_mutex);
+    xSemaphoreGive(storage_mutex);
 }
 
 static void handle_trim_records() {
-    xSemaphoreTake(spiffs_mutex, portMAX_DELAY);
+    xSemaphoreTake(storage_mutex, portMAX_DELAY);
 
-    File f = SPIFFS.open(RECORDS_FILE, FILE_WRITE);
+    File f = LittleFS.open(RECORDS_FILE, FILE_WRITE);
     if (f) {
         f.close();
     }
 
-    xSemaphoreGive(spiffs_mutex);
+    xSemaphoreGive(storage_mutex);
 
     server.send(200, "text/plain", "OK");
 }
@@ -98,7 +98,7 @@ static void server_task(void *) {
 // ---- public API ----
 
 void initialize_logger() {
-    spiffs_mutex = xSemaphoreCreateMutex();
+    storage_mutex = xSemaphoreCreateMutex();
 
     xTaskCreate(logger_task, "dht_logger", 4000, NULL, ESP_TASK_PRIO_MAX - 1,
                 NULL);
