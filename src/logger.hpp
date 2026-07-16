@@ -1,5 +1,5 @@
 #pragma once
-#include <cstdio>
+#include <cstdint>
 
 void initialize_logger();
 
