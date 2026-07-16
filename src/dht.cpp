@@ -18,6 +18,7 @@ void dht_loop(void *) {
         Humidity.store(humidity, std::memory_order::release);
 
         start_flash_light(100, 1);
+        Serial.printf("%.1f C, %.1f %%\n", temperature, humidity);
 
         unsigned long elapsed = millis() - start;
         delay((elapsed < 2000) ? (2000 - elapsed) : 0);
