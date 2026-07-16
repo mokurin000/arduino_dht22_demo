@@ -1,5 +1,3 @@
 [wokwi]
 version = 1
 firmware = "firmware.uf2"
-# due to wokwi limitation, we cannot load
-# .pio/build/stable/partitions.bin directly
