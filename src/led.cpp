@@ -4,10 +4,15 @@
 
 #define NO_LED_FLASHING 0
 
+#ifndef ARDUINO_ESP32C3_DEV
 #define LED_PIN 2
+#else
+#define LED_PIN 8
+#endif
+
 // 12.5% brightness
-#define LED_on ledcWrite(LED_PIN, 32)
-#define LED_off ledcWrite(LED_PIN, 0)
+inline void LED_on() { ledcWrite(LED_PIN, 32); }
+inline void LED_off() { ledcWrite(LED_PIN, 0); }
 
 std::atomic<bool> Flashing(false);
 
@@ -25,13 +30,13 @@ void flash_led(void *) {
         }
         if (FlashLight.times <= 0) {
             Flashing.store(false);
-            LED_off;
+            LED_off();
             led_on = false;
             continue;
         }
         FlashLight.times--;
         led_on = !led_on;
-        led_on ? LED_on : LED_off;
+        led_on ? LED_on() : LED_off();
         delay(FlashLight.interval);
     }
 }
