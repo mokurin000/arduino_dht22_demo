@@ -6,37 +6,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>dht22</title>
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/beercss@3/dist/cdn/beer.min.css">
-    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="css/pico.min.css">
+    <link rel="stylesheet" href="css/flexboxgrid.min.css">
 
     <script type="module" src="app.js"></script>
 </head>
 
 <body>
-    <main class="responsive">
+    <main class="container">
         <h3>ESP32 DHT22 Monitor</h3>
 
         <!-- Device management bar -->
-        <div class="manage-bar">
-            <div class="manage-inputs">
-                <input id="ipInput" class="input" type="text" placeholder=" 设备 IP">
-                <input id="nameInput" class="input" type="text" placeholder=" 名称（可选）">
+        <div class="row">
+            <div class="col-xs-12 col-md-4">
+                <input id="ipInput" type="text" placeholder="设备 IP">
             </div>
-            <button id="addBtn" class="btn primary">＋ 添加</button>
+            <div class="col-xs-12 col-md-4">
+                <input id="nameInput" type="text" placeholder="名称（可选）">
+            </div>
+            <div class="col-xs-12 col-md-4">
+                <button id="addBtn" class="btn">＋ 添加</button>
+            </div>
         </div>
 
-        <!-- Device cards grid -->
-        <div id="deviceGrid" class="device-grid"></div>
+        <!-- Device cards container (rows are built by JS) -->
+        <div id="deviceGrid"></div>
 
         <!-- Empty state -->
-        <div id="emptyState" class="empty-state" style="display:none">
+        <div id="emptyState" style="display:none;text-align:center;margin-block:3rem;opacity:0.5">
             <p>还没有添加设备，在上方输入 IP 后点击 "添加"。</p>
         </div>
 
-        <!-- Local time footer (independent) -->
-        <footer class="local-time">
-            <span class="label">🖥 本地时间</span>
-            <span id="localTime">--</span>
+        <!-- Local time footer -->
+        <footer style="text-align:center;margin-top:2rem;opacity:0.6">
+            <small>🖥 本地时间 <span id="localTime">--</span></small>
         </footer>
     </main>
 </body>

@@ -31,29 +31,26 @@ function escapeHtml(str) {
 }
 
 function createDeviceCard(device) {
-    const card = document.createElement("div");
-    card.className = "device-card";
-    card.id = `device-${device.id}`;
+    const card = document.createElement("article");
 
     card.innerHTML = `
-        <div class="card-header">
-            <span class="device-name">${escapeHtml(device.name)}</span>
-            <button class="delete-btn" data-id="${device.id}" title="删除设备">✕</button>
+        <header style="display:flex;justify-content:space-between;align-items:center">
+            <strong>${escapeHtml(device.name)}</strong>
+            <button class="delete-btn contrast outline" data-id="${device.id}" title="删除设备" style="padding:0.2rem 0.6rem;margin:0">✕</button>
+        </header>
+        <div class="row">
+            <div class="col-xs-6">
+                <small>🌡 温度</small>
+                <h4 class="temp-value">--.- °C</h4>
+            </div>
+            <div class="col-xs-6">
+                <small>💧 相对湿度</small>
+                <h4 class="humi-value">--.- %</h4>
+            </div>
         </div>
-        <article class="kv">
-            <span class="label">🌡 温度</span>
-            <span class="value large temp-value">--.- °C</span>
-        </article>
-        <article class="kv">
-            <span class="label">💧 相对湿度</span>
-            <span class="value large humi-value">--.- %</span>
-        </article>
-        <article class="kv">
-            <span class="label">⏰ 对端时间</span>
-            <span class="value remote-value">--</span>
-        </article>
-        <footer class="status">
-            <span class="device-status">● 等待数据…</span>
+        <p>🏠时间 <span class="remote-value">--</span></p>
+        <footer>
+            <small class="device-status">● 等待数据…</small>
         </footer>
     `;
 
@@ -65,9 +62,24 @@ function createDeviceCard(device) {
 function renderAllCards() {
     const grid = document.getElementById("deviceGrid");
     grid.innerHTML = "";
-    devices.forEach(d => grid.appendChild(createDeviceCard(d)));
+
+    devices.forEach((d, i) => {
+        if (i % 3 === 0) {
+            row = document.createElement("div");
+            row.className = "row";
+            grid.appendChild(row);
+        }
+        const col = document.createElement("div");
+        col.className = "col-xs-12 col-md-4";
+        col.id = `device-${d.id}`;
+        col.appendChild(createDeviceCard(d));
+        row.appendChild(col);
+    });
+
     toggleEmptyState();
 }
+
+let row;
 
 function toggleEmptyState() {
     const empty = document.getElementById("emptyState");
@@ -98,7 +110,7 @@ function updateDeviceCard(device, data) {
 
     const status = card.querySelector(".device-status");
     status.textContent = "● 已连接";
-    status.className = "device-status ok";
+    status.style.color = "#16a34a";
 }
 
 function markDeviceOffline(device) {
@@ -109,7 +121,7 @@ function markDeviceOffline(device) {
 
     const status = card.querySelector(".device-status");
     status.textContent = "● 离线";
-    status.className = "device-status bad";
+    status.style.color = "#dc2626";
 }
 
 async function fetchDevice(device) {
@@ -150,8 +162,7 @@ function addDevice(ip, name) {
     devices.push(device);
     saveDevices();
 
-    document.getElementById("deviceGrid").appendChild(createDeviceCard(device));
-    toggleEmptyState();
+    renderAllCards();
     startDevicePolling(device);
     return true;
 }
@@ -192,11 +203,10 @@ function init() {
     saved.forEach(s => {
         const device = { id: nextId++, ip: s.ip, name: s.name || s.ip, online: false };
         devices.push(device);
-        document.getElementById("deviceGrid").appendChild(createDeviceCard(device));
         startDevicePolling(device);
     });
 
-    toggleEmptyState();
+    renderAllCards();
     startLocalTime();
 
     document.getElementById("addBtn").addEventListener("click", () => {
