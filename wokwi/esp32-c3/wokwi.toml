@@ -1,6 +1,6 @@
 [wokwi]
 version = 1
 elf = "../../.pio/build/wokwi-c3-mini/firmware.elf"
-firmware = "../../.pio/build/wokwi-c3-mini/firmware.bin"
+firmware = "firmware.uf2"
 # due to wokwi limitation, we cannot load
 # .pio/build/stable/partitions.bin directly
