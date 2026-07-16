@@ -56,7 +56,7 @@ static void logger_task(void *) {
 
 // ---- web server handlers ----
 
-static void handle_root() {
+static void handle_api() {
     time_t timestamp;
     time(&timestamp);
 
@@ -68,6 +68,7 @@ static void handle_root() {
             "{\"timestamp\":%llu,\"temperature\":%.1f,\"humidity\":%.1f}",
             timestamp, temperature, humidity);
 
+    server.sendHeader("Access-Control-Allow-Origin", "*");
     server.send(200, "application/json", buffer);
 }
 
@@ -101,7 +102,7 @@ static void handle_trim_records() {
 static void server_task(void *) {
     sleep(5); // waits for initialization
 
-    server.on("/", handle_root);
+    server.on("/api", handle_api);
     server.on("/records", handle_records);
     server.on("/trim_records", handle_trim_records);
     server.begin();

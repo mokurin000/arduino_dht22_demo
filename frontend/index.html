@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>dht22</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/beercss@3/dist/cdn/beer.min.css">
+    <link rel="stylesheet" href="/style.css">
+
+    <script type="module" src="app.js"></script>
+</head>
+
+<body>
+    <main class="responsive">
+        <h3>ESP32 DHT22 Monitor</h3>
+
+        <div class="dashboard">
+            <article class="kv">
+                <span class="label">🌡 温度</span>
+                <span class="value large" id="temperature">--.- °C</span>
+            </article>
+
+            <article class="kv">
+                <span class="label">💧 相对湿度</span>
+                <span class="value large" id="humidity">--.- %</span>
+            </article>
+
+            <article class="kv">
+                <span class="label">⏰ 对端</span>
+                <span class="value" id="remoteTime">--</span>
+            </article>
+
+            <article class="kv">
+                <span class="label">🖥 本地</span>
+                <span class="value" id="localTime">--</span>
+            </article>
+
+            <footer class="status">
+                <span id="status" class="ok">● 已连接</span>
+            </footer>
+        </div>
+    </main>
+</body>
+
+</html>

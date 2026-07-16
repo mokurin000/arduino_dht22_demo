@@ -1,0 +1,46 @@
+:root {
+    --background: #eef2f6;
+    --surface: #ffffff;
+    --primary: #1976d2;
+    --text: #1f2937;
+
+    --radius: 18px;
+    --shadow:
+        0 1px 2px rgb(0 0 0 / 0.06),
+        0 8px 24px rgb(0 0 0 / 0.08);
+}
+
+body {
+    margin: 0;
+    padding: 32px;
+    background: var(--background);
+    color: var(--text);
+    font-family:
+        Inter,
+        "Noto Sans SC",
+        system-ui,
+        sans-serif;
+}
+
+.dashboard article {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+
+    padding: 1rem 1.25rem;
+}
+
+.dashboard .label {
+    font-weight: 700;
+    color: var(--on-surface-variant);
+}
+
+.dashboard .value {
+    font-weight: 700;
+    text-align: right;
+}
+
+.dashboard .large {
+    font-size: 1.8rem;
+}
