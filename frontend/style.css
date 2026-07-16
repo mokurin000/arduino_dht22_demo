@@ -44,3 +44,135 @@ body {
 .dashboard .large {
     font-size: 1.8rem;
 }
+
+/* ── Manage bar ─────────────────────────────── */
+
+.manage-bar {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+}
+
+.manage-inputs {
+    display: flex;
+    gap: 0.75rem;
+    flex: 1 1 320px;
+    flex-wrap: wrap;
+}
+
+.manage-inputs .input {
+    flex: 1 1 220px;
+    min-width: 160px;
+    padding-block: 0.7rem;
+}
+
+/* ── Device grid ───────────────────────────── */
+
+.device-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.25rem;
+}
+
+/* ── Device card ───────────────────────────── */
+
+.device-card {
+    background: var(--surface);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+}
+
+.device-card .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1.25rem 0;
+}
+
+.device-card .device-name {
+    font-weight: 700;
+    font-size: 1.05rem;
+}
+
+.device-card .delete-btn {
+    background: none;
+    border: none;
+    color: #999;
+    cursor: pointer;
+    font-size: 1.1rem;
+    padding: 4px 8px;
+    border-radius: 8px;
+    transition: background 0.15s, color 0.15s;
+}
+
+.device-card .delete-btn:hover {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+.device-card article {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.9rem 1.25rem;
+
+    margin: 0.5rem;
+}
+
+.device-card .label {
+    font-weight: 700;
+    color: var(--text);
+    opacity: 0.65;
+}
+
+.device-card .value {
+    font-weight: 700;
+    text-align: right;
+}
+
+.device-card .large {
+    font-size: 1.8rem;
+}
+
+.device-card .status {
+    padding: 0.6rem 1.25rem;
+    border-top: 1px solid #e5e7eb;
+}
+
+.device-status {
+    font-size: 0.85rem;
+}
+
+.device-status.ok {
+    color: #16a34a;
+}
+
+.device-status.bad {
+    color: #dc2626;
+}
+
+/* ── Empty state ───────────────────────────── */
+
+.empty-state {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--text);
+    opacity: 0.5;
+}
+
+/* ── Local time footer ─────────────────────── */
+
+.local-time {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 2rem;
+    padding: 1rem;
+    font-size: 0.9rem;
+    opacity: 0.6;
+}

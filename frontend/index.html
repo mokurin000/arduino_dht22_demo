@@ -16,31 +16,28 @@
     <main class="responsive">
         <h3>ESP32 DHT22 Monitor</h3>
 
-        <div class="dashboard">
-            <article class="kv">
-                <span class="label">🌡 温度</span>
-                <span class="value large" id="temperature">--.- °C</span>
-            </article>
-
-            <article class="kv">
-                <span class="label">💧 相对湿度</span>
-                <span class="value large" id="humidity">--.- %</span>
-            </article>
-
-            <article class="kv">
-                <span class="label">⏰ 对端</span>
-                <span class="value" id="remoteTime">--</span>
-            </article>
-
-            <article class="kv">
-                <span class="label">🖥 本地</span>
-                <span class="value" id="localTime">--</span>
-            </article>
-
-            <footer class="status">
-                <span id="status" class="ok">● 已连接</span>
-            </footer>
+        <!-- Device management bar -->
+        <div class="manage-bar">
+            <div class="manage-inputs">
+                <input id="ipInput" class="input" type="text" placeholder=" 设备 IP">
+                <input id="nameInput" class="input" type="text" placeholder=" 名称（可选）">
+            </div>
+            <button id="addBtn" class="btn primary">＋ 添加</button>
         </div>
+
+        <!-- Device cards grid -->
+        <div id="deviceGrid" class="device-grid"></div>
+
+        <!-- Empty state -->
+        <div id="emptyState" class="empty-state" style="display:none">
+            <p>还没有添加设备，在上方输入 IP 后点击 "添加"。</p>
+        </div>
+
+        <!-- Local time footer (independent) -->
+        <footer class="local-time">
+            <span class="label">🖥 本地时间</span>
+            <span id="localTime">--</span>
+        </footer>
     </main>
 </body>
 
