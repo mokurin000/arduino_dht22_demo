@@ -14,6 +14,10 @@ Now edit the Wifi SSID and password, compile and upload.
 
 To have a better expierence than Arduino IDE, setup `pioarduino`, and reload window, wait for automatic installation.
 
-You should install `C/C++` from Microsoft to be able to find headers without manual configuration, `clangd` is however effortless about parsing the generated `c_cpp_properties.json`.
+> [!NOTE]
+>
+> You should select your pioaruduino Intelli Sense Engine,
+>
+> by default it generates configuration for Microsoft C/C++.
 
 Once setup pioarduino, you could type `Command+Alt+P` and select `pioarduino: Build`.
