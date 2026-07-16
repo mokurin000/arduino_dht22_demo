@@ -10,7 +10,11 @@ OUTPUT_FILE = "records.html"
 # 读取 CSV
 df = (
     pl.read_csv(CSV_FILE)
-    .with_columns(pl.col("localtime").str.to_datetime(format="%Y-%m-%dT%H:%M:%S%#z"))
+    .with_columns(
+        pl.col("localtime")
+        .str.to_datetime(format="%Y-%m-%dT%H:%M:%S%#z")
+        .dt.offset_by("8h")
+    )
     .sort("localtime")
 )
 
@@ -37,7 +41,7 @@ line = (
     )
     .extend_axis(
         yaxis=opts.AxisOpts(
-            name="Humidity (%)",
+            name="RH (%)",
             type_="value",
             position="right",
             min_=0,
@@ -45,7 +49,7 @@ line = (
         )
     )
     .add_yaxis(
-        "Humidity (%)",
+        "RH (%)",
         humidity,
         is_symbol_show=False,
         is_smooth=False,
