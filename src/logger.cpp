@@ -1,5 +1,6 @@
 #include <LittleFS.h>
 #include <WebServer.h>
+#include <ctime>
 #include <freertos/FreeRTOS.h>
 #include <freertos/semphr.h>
 #include <time.h>
@@ -55,6 +56,21 @@ static void logger_task(void *) {
 
 // ---- web server handlers ----
 
+static void handle_root() {
+    time_t timestamp;
+    time(&timestamp);
+
+    float temperature = getTemperature();
+    float humidity = getHumidity();
+
+    char buffer[128];
+    sprintf(buffer,
+            "{\"timestamp\":%llu,\"temperature\":%.1f,\"humidity\":%.1f}",
+            timestamp, temperature, humidity);
+
+    server.send(200, "application/json", buffer);
+}
+
 static void handle_records() {
     xSemaphoreTake(storage_mutex, portMAX_DELAY);
 
@@ -85,6 +101,7 @@ static void handle_trim_records() {
 static void server_task(void *) {
     sleep(5); // waits for initialization
 
+    server.on("/", handle_root);
     server.on("/records", handle_records);
     server.on("/trim_records", handle_trim_records);
     server.begin();
