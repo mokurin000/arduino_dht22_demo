@@ -2,6 +2,9 @@
 /.pio
 
 /.vscode
+/.cache
+/compile_commands.json
+/.clangd
 
 /src/src.ino.cpp
 
