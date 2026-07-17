@@ -48,7 +48,7 @@ function createDeviceCard(device) {
                 <h4 class="humi-value">--.- %</h4>
             </div>
         </div>
-        <p>🕰️设备时间 <span class="remote-value">--</span></p>
+        <p>🌐上次同步 <span class="remote-value">--</span></p>
         <p>📡信号强度 <span class="wifi-rssi">--</span></p>
         <footer>
             <small class="device-status">● 等待数据…</small>

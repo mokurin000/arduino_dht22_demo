@@ -14,7 +14,10 @@
 
 <body>
     <main class="container">
-        <h3>ESP32 DHT22 Monitor</h3>
+
+        <p>
+            <span style="font-weight: 700">ESP32 DHT22 Monitor</span> - <span id="localTime">--</span>
+        </p>
 
         <!-- Device management bar -->
         <div class="row">
@@ -36,11 +39,6 @@
         <div id="emptyState" style="display:none;text-align:center;margin-block:3rem;opacity:0.5">
             <p>还没有添加设备，在上方输入 IP 后点击 "添加"。</p>
         </div>
-
-        <!-- Local time footer -->
-        <footer style="text-align:center;margin-top:2rem;opacity:0.6">
-            <small>🖥 本地时间 <span id="localTime">--</span></small>
-        </footer>
     </main>
 </body>
 
