@@ -8,8 +8,9 @@
 
 /src/src.ino.cpp
 
-/records*
-
 __pycache__
 /.python-version
 /uv.lock
+
+records*.csv
+records*.html
