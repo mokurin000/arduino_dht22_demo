@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 
+import sys
+
 import polars as pl
 from pyecharts import options as opts
 from pyecharts.charts import Line
 
-CSV_FILE = "records.csv"
-OUTPUT_FILE = "records.html"
+CSV_FILE = sys.argv[1] if len(sys.argv) == 2 else "records.csv"
+OUTPUT_FILE = CSV_FILE.replace(".csv", ".html")
 
 # 读取 CSV
 df = (
