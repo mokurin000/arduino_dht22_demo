@@ -129,6 +129,8 @@ function markDeviceOffline(device) {
 }
 
 async function fetchDevice(device) {
+    if (device.fetching) return;
+    device.fetching = true;
     try {
         const res = await fetch(`http://${device.ip}:${API_PORT}/api`, {
             cache: "no-store",
@@ -138,6 +140,8 @@ async function fetchDevice(device) {
     } catch (err) {
         console.error(`[${device.name}]`, err);
         markDeviceOffline(device);
+    } finally {
+        device.fetching = false;
     }
 }
 
