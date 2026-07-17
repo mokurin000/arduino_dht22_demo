@@ -49,7 +49,7 @@ function createDeviceCard(device) {
             </div>
         </div>
         <p>🌐上次同步 <span class="remote-value">--</span></p>
-        <p>📡信号强度 <span class="wifi-rssi">--</span></p>
+        <p>📡信号强度 <span class="wifi-rssi">--</span> dBm</p>
         <footer>
             <small class="device-status">● 等待数据…</small>
         </footer>
