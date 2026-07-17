@@ -1,5 +1,6 @@
 #include <LittleFS.h>
 #include <WebServer.h>
+#include <WiFi.h>
 #include <ctime>
 #include <freertos/FreeRTOS.h>
 #include <freertos/semphr.h>
@@ -62,11 +63,13 @@ static void handle_api() {
 
     float temperature = getTemperature();
     float humidity = getHumidity();
+    char rssi = WiFi.RSSI();
 
     char buffer[128];
     sprintf(buffer,
-            "{\"timestamp\":%llu,\"temperature\":%.1f,\"humidity\":%.1f}",
-            timestamp, temperature, humidity);
+            "{\"timestamp\":%llu,\"temperature\":%.1f,\"humidity\":%.1f,"
+            "\"rssi\":%hhd}",
+            timestamp, temperature, humidity, rssi);
 
     server.sendHeader("Access-Control-Allow-Origin", "*");
     server.send(200, "application/json", buffer);

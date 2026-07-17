@@ -48,7 +48,8 @@ function createDeviceCard(device) {
                 <h4 class="humi-value">--.- %</h4>
             </div>
         </div>
-        <p>📡设备时间 <span class="remote-value">--</span></p>
+        <p>🕰️设备时间 <span class="remote-value">--</span></p>
+        <p>📡信号强度 <span class="wifi-rssi">--</span></p>
         <footer>
             <small class="device-status">● 等待数据…</small>
         </footer>
@@ -95,6 +96,7 @@ function updateDeviceCard(device, data) {
     device.temperature = data.temperature;
     device.humidity = data.humidity;
     device.timestamp = data.timestamp;
+    device.rssi = data.rssi;
     device.online = true;
 
     const formatter = new Intl.DateTimeFormat(undefined, {
@@ -107,6 +109,8 @@ function updateDeviceCard(device, data) {
 
     const remote = new Date(data.timestamp * 1000);
     card.querySelector(".remote-value").textContent = formatter.format(remote);
+
+    card.querySelector(".wifi-rssi").textContent = device.rssi;
 
     const status = card.querySelector(".device-status");
     status.textContent = "● 已连接";
