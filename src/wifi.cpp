@@ -30,7 +30,7 @@ void reset_wifi(void *) {
             if (WifiEverStarted.load()) {
                 WiFi.disconnect(true);
             }
-            WiFi.mode(WIFI_STA);
+
             WiFi.begin(ssid, password);
             WifiEverStarted.store(true);
             ResetWifi.store(false);

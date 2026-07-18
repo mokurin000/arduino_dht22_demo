@@ -8,17 +8,17 @@
 
 // CONFIG_IDF_TARGET_ESP32C3 is defined by ESP-IDF for any C3-based board
 // (including nologo_esp32c3_super_mini, not just the official Dev Module).
-#ifdef CONFIG_IDF_TARGET_ESP32C3
-#define LED_PIN 8
-#else
-#define LED_PIN 2
-#endif
-
 #ifndef CONFIG_IDF_TARGET_ESP32C3
+
+#define LED_PIN 2
+
 // 12.5% brightness
 inline void LED_on() { ledcWrite(LED_PIN, 32); }
 inline void LED_off() { ledcWrite(LED_PIN, 0); }
 #else
+
+#define LED_PIN 8
+
 inline void LED_on() { digitalWrite(LED_PIN, HIGH); }
 inline void LED_off() { digitalWrite(LED_PIN, LOW); }
 #endif
