@@ -15,17 +15,25 @@ import sys
 import urllib.request
 from datetime import datetime
 
-RECORDS_URL = "http://192.168.1.103:8888/records"
-TRIM_URL = "http://192.168.1.103:8888/trim_records"
-
-CSV_FILE = "records.csv"
-
 RECORD_STRUCT = struct.Struct("<Qff")  # uint64 LE, float32 LE, float32 LE
 
 
 def main():
+    if len(sys.argv) < 2:
+        print("Usage: python decode_to_csv.py <ip> [name]", file=sys.stderr)
+        print("  <ip>    IP address of the ESP32 (required)", file=sys.stderr)
+        print("  [name]  Optional label for the CSV file", file=sys.stderr)
+        sys.exit(1)
+
+    ip = sys.argv[1]
+    name = sys.argv[2] if len(sys.argv) > 2 else ""
+
+    records_url = f"http://{ip}:8888/records"
+    trim_url = f"http://{ip}:8888/trim_records"
+    csv_file = f"export/records_{name}.csv" if name else "export/records.csv"
+
     # 下载记录
-    with urllib.request.urlopen(RECORDS_URL) as resp:
+    with urllib.request.urlopen(records_url) as resp:
         data = resp.read()
 
     if len(data) == 0:
@@ -40,12 +48,12 @@ def main():
         )
         sys.exit(1)
 
-    write_header = not os.path.exists(CSV_FILE)
+    write_header = not os.path.exists(csv_file)
 
     count = 0
 
     # 追加写入 CSV
-    with open(CSV_FILE, "a", newline="", encoding="utf-8") as f:
+    with open(csv_file, "a", newline="", encoding="utf-8") as f:
         writer = csv.writer(f)
 
         if write_header:
@@ -68,10 +76,10 @@ def main():
 
             count += 1
 
-    print(f"Appended {count} records to {CSV_FILE}", file=sys.stderr)
+    print(f"Appended {count} records to {csv_file}", file=sys.stderr)
 
     # 写入成功后通知 ESP32 删除已获取记录
-    with urllib.request.urlopen(TRIM_URL):
+    with urllib.request.urlopen(trim_url):
         pass
 
     print("Trim completed.", file=sys.stderr)
