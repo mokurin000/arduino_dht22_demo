@@ -38,4 +38,10 @@ void setup(void) {
     );
 }
 
-void loop(void) { delay(100); }
+void loop(void) {
+    if (WIFI_DISCONNECTED) {
+        connect_wifi();
+    }
+
+    delay(1000);
+}
