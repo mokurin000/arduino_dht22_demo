@@ -19,8 +19,21 @@ inline void LED_off() { ledcWrite(LED_PIN, 0); }
 
 #define LED_PIN 8
 
-inline void LED_on() { digitalWrite(LED_PIN, HIGH); }
-inline void LED_off() { digitalWrite(LED_PIN, LOW); }
+inline void LED_on() {
+#ifdef NOLOGO_C3_SUPER_MINI
+    digitalWrite(LED_PIN, LOW);
+#else
+    digitalWrite(LED_PIN, HIGH);
+#endif
+}
+inline void LED_off() {
+#ifdef NOLOGO_C3_SUPER_MINI
+    digitalWrite(LED_PIN, HIGH);
+#else
+    digitalWrite(LED_PIN, LOW);
+#endif
+}
+
 #endif
 
 std::atomic<bool> Flashing(false);

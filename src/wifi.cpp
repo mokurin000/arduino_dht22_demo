@@ -31,7 +31,14 @@ void reset_wifi(void *) {
                 WiFi.disconnect(true);
             }
 
+            WiFi.mode(WIFI_MODE_STA);
             WiFi.begin(ssid, password);
+
+#ifdef NOLOGO_C3_SUPER_MINI
+            Serial.println("[WiFi] decreasing tx power for super mini");
+            WiFi.setTxPower(WIFI_POWER_15dBm);
+#endif
+
             WifiEverStarted.store(true);
             ResetWifi.store(false);
         } else {
