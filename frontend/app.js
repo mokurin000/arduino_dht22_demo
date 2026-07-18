@@ -146,7 +146,7 @@ async function fetchDevice(device) {
 }
 
 function startDevicePolling(device) {
-    fetchDevice(device);
+    setTimeout(() => fetchDevice(device), 0);
     device.timerId = setInterval(() => fetchDevice(device), 5000);
 }
 
