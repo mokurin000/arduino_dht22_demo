@@ -6,8 +6,6 @@
 /compile_commands.json
 /.clangd
 
-/src/src.ino.cpp
-
 __pycache__
 /.python-version
 /uv.lock
