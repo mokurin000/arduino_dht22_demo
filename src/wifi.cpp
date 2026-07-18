@@ -1,5 +1,6 @@
 #include <atomic>
 
+#include "WiFiGeneric.h"
 #include "led.hpp"
 #include "wifi.hpp"
 
@@ -36,7 +37,7 @@ void reset_wifi(void *) {
 
 #ifdef NOLOGO_C3_SUPER_MINI
             Serial.println("[WiFi] decreasing tx power for super mini");
-            WiFi.setTxPower(WIFI_POWER_15dBm);
+            WiFi.setTxPower(WIFI_POWER_11dBm);
 #endif
 
             WifiEverStarted.store(true);
