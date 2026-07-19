@@ -7,8 +7,7 @@
 /.clangd
 
 __pycache__
-/.python-version
-/uv.lock
 
-records*.csv
-records*.html
+# User-specific InfluxDB upload config (contains API keys/secrets)
+# Keep config.example.toml tracked in git instead.
+scripts/config.toml

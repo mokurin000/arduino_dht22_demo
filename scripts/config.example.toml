@@ -1,0 +1,34 @@
+# InfluxDB Line Protocol upload configuration for ESP32 DHT22 sensor nodes.
+#
+# Copy this file to 'config.toml' in the same directory and adjust the
+# values to match your environment.
+#   cp config.example.toml config.toml
+#
+# The measurement name used for all records is 'environment'.
+# Each record produces one line:
+#   environment,node=<name>,host=<ip> temperature=<C>,humidity=<RH%> <ts_ns>
+
+# ---------------------------------------------------------------------------
+# Required: InfluxDB-compatible write endpoint.
+# This is the URL that accepts Line Protocol POST requests.
+# Examples:
+#   post_url = "https://us-east-1-1.aws.cloud2.influxdata.com/api/v2/write?org=my-org&bucket=my-bucket"
+#   post_url = "http://localhost:8086/write?db=sensors"
+# ---------------------------------------------------------------------------
+post_url = ""
+
+# Optional: Bearer token for authentication.
+# Leave empty when not required.
+access_token = ""
+
+# ---------------------------------------------------------------------------
+# Sensor nodes to query.
+# Each entry defines one ESP32 device running the DHT22 logger firmware.
+# ---------------------------------------------------------------------------
+[[node]]
+host = "192.168.1.100" # IP address or hostname of the device
+name = "living_room"   # Human-readable location label (used as the 'node' tag)
+
+[[node]]
+host = "192.168.1.101"
+name = "greenhouse"
