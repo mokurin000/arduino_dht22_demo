@@ -375,7 +375,7 @@ def main() -> int:
                 log.warning(f"  WARN  fetch: timeout after {timeout}s")
                 timeout *= 2
             except Exception as e:
-                log.error(f"  FAIL  fetch: {e}")
+                log.error(f"  FAIL  fetch: {e.__class__}: {e.__cause__}")
                 continue
             else:
                 break
