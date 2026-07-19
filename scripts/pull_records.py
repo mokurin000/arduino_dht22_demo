@@ -127,7 +127,7 @@ def load_config(path: str) -> AppConfig:
 # ---------------------------------------------------------------------------
 
 
-def fetch_records(host: str) -> bytes | None:
+def fetch_records(host: str, timeout: float) -> bytes | None:
     """Fetch raw binary records from an ESP32 device.
 
     Performs a GET request to ``http://{host}:8888/records``.
@@ -141,13 +141,10 @@ def fetch_records(host: str) -> bytes | None:
     url = f"http://{host}:{DEVICE_PORT}/records"
     try:
         req = urllib.request.Request(url, method="GET")
-        with urllib.request.urlopen(req, timeout=REQUEST_TIMEOUT) as resp:
+        with urllib.request.urlopen(req, timeout=timeout) as resp:
             return resp.read()
     except urllib.error.URLError as exc:
         log.error("  FAIL  fetch: %s", exc.reason)
-        return None
-    except TimeoutError:
-        log.error("  FAIL  fetch: timed out after %ss", REQUEST_TIMEOUT)
         return None
 
 
@@ -370,7 +367,18 @@ def main() -> int:
         log.info("--- %s ---", label)
 
         # 1. Fetch
-        raw = fetch_records(node.host)
+        timeout = 1
+        while timeout <= 16:
+            try:
+                raw = fetch_records(node.host, timeout=timeout)
+            except TimeoutError:
+                log.warning(f"  WARN  fetch: timeout after {timeout}s")
+                timeout *= 2
+            except Exception as e:
+                log.error(f"  FAIL  fetch: {e}")
+                continue
+            else:
+                break
         if raw is None:
             all_ok = False
             log.info("")
