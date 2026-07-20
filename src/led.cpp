@@ -4,7 +4,9 @@
 #include <esp_task.h>
 #include <sdkconfig.h>
 
+#ifndef NO_LED_FLASHING
 #define NO_LED_FLASHING 0
+#endif
 
 // CONFIG_IDF_TARGET_ESP32C3 is defined by ESP-IDF for any C3-based board
 // (including nologo_esp32c3_super_mini, not just the official Dev Module).
@@ -85,6 +87,8 @@ void spawn_flash_task() {
 #else
     pinMode(LED_PIN, OUTPUT);
 #endif
+
+    LED_off();
 
     xTaskCreate(flash_led, "flash_led", 2000, NULL, ESP_TASK_PRIO_MAX - 1,
                 NULL);
