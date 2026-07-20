@@ -13,7 +13,7 @@
 static constexpr uint64_t MIN_VALID_TIMESTAMP =
     1767225600ULL; // 2026-01-01 00:00:00 GMT
 
-static SemaphoreHandle_t storage_mutex = NULL;
+static SemaphoreHandle_t storage_mutex = nullptr;
 static WebServer server(8888);
 
 // ---- record writing ----
@@ -121,8 +121,8 @@ static void server_task(void *) {
 void initialize_logger() {
     storage_mutex = xSemaphoreCreateMutex();
 
-    xTaskCreate(logger_task, "dht_logger", 4000, NULL, ESP_TASK_PRIO_MAX - 1,
-                NULL);
+    xTaskCreate(logger_task, "dht_logger", 4000, nullptr, ESP_TASK_PRIO_MAX - 1,
+                nullptr);
     xTaskCreatePinnedToCore(server_task, "dht_server", 8192, nullptr,
                             ESP_TASK_PRIO_MIN + 1, nullptr,
                             ARDUINO_RUNNING_CORE);

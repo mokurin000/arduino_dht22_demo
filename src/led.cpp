@@ -90,6 +90,6 @@ void spawn_flash_task() {
 
     LED_off();
 
-    xTaskCreate(flash_led, "flash_led", 2000, NULL, ESP_TASK_PRIO_MAX - 1,
-                NULL);
+    xTaskCreate(flash_led, "flash_led", 2000, nullptr, ESP_TASK_PRIO_MAX - 1,
+                nullptr);
 }

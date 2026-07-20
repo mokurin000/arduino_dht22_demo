@@ -28,8 +28,8 @@ void dht_loop(void *) {
 void initialize_dht() {
     dht.begin();
 
-    xTaskCreate(dht_loop, "dht_read_data", 4000, NULL, ESP_TASK_PRIO_MAX - 1,
-                NULL);
+    xTaskCreate(dht_loop, "dht_read_data", 4000, nullptr, ESP_TASK_PRIO_MAX - 1,
+                nullptr);
 }
 
 float getTemperature() { return Temperature.load(std::memory_order::acquire); }

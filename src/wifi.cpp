@@ -49,8 +49,8 @@ void reset_wifi(void *) {
 }
 
 void spawn_wifi_task() {
-    xTaskCreate(reset_wifi, "wifi_reset", 4000, NULL, ESP_TASK_PRIO_MAX - 1,
-                NULL);
+    xTaskCreate(reset_wifi, "wifi_reset", 4000, nullptr, ESP_TASK_PRIO_MAX - 1,
+                nullptr);
 }
 
 /*

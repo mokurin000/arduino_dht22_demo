@@ -13,6 +13,7 @@ if [ -d "./.pio/build/wokwi" ]; then
     )
 fi
 
+# TODO: fix c3 mini emulation crash
 if [ -d "./.pio/build/wokwi-c3-mini" ]; then
     (
         cd .pio/build/wokwi-c3-mini
