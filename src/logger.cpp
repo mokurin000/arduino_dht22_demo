@@ -66,10 +66,18 @@ static void handle_api() {
     char rssi = WiFi.RSSI();
 
     char buffer[128];
-    sprintf(buffer,
-            "{\"timestamp\":%llu,\"temperature\":%.1f,\"humidity\":%.1f,"
-            "\"rssi\":%hhd}",
-            timestamp, temperature, humidity, rssi);
+
+    if (isnanf(humidity) || isnanf(temperature)) {
+        sprintf(buffer,
+                "{\"timestamp\":%llu,\"temperature\":null,\"humidity\":null,"
+                "\"rssi\":%hhd}",
+                timestamp, rssi);
+    } else {
+        sprintf(buffer,
+                "{\"timestamp\":%llu,\"temperature\":%.1f,\"humidity\":%.1f,"
+                "\"rssi\":%hhd}",
+                timestamp, temperature, humidity, rssi);
+    }
 
     server.sendHeader("Access-Control-Allow-Origin", "*");
     server.send(200, "application/json", buffer);
