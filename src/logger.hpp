@@ -3,5 +3,5 @@
 
 void initialize_logger();
 
-// 12 times per a minute
-const constexpr uint32_t RECORD_INTERVAL{5'000};
+// 4 times per a minute
+const constexpr uint32_t RECORD_INTERVAL{15'000};
