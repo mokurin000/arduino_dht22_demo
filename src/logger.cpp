@@ -110,7 +110,7 @@ static void handle_trim_records() {
 }
 
 static void server_task(void *) {
-    sleep(5000); // waits for initialization
+    sleep(5); // waits for initialization
 
     server.on("/api", handle_api);
     server.on("/records", handle_records);
