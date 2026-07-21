@@ -15,3 +15,5 @@ __pycache__
 /uv.lock
 
 *.uf2
+
+/scripts/config.toml

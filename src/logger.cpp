@@ -4,6 +4,7 @@
 #include <freertos/semphr.h>
 #include <time.h>
 
+#include "WiFi.h"
 #include "common.hpp"
 #include "dht.hpp"
 #include "logger.hpp"
@@ -55,6 +56,32 @@ static void logger_task(void *) {
 
 // ---- web server handlers ----
 
+static void handle_api() {
+    time_t timestamp;
+    time(&timestamp);
+
+    float temperature = getTemperature();
+    float humidity = getHumidity();
+    char rssi = WiFi.RSSI();
+
+    char buffer[128];
+
+    if (isnanf(humidity) || isnanf(temperature)) {
+        sprintf(buffer,
+                "{\"timestamp\":%llu,\"temperature\":null,\"humidity\":null,"
+                "\"rssi\":%hhd}",
+                timestamp, rssi);
+    } else {
+        sprintf(buffer,
+                "{\"timestamp\":%llu,\"temperature\":%.1f,\"humidity\":%.1f,"
+                "\"rssi\":%hhd}",
+                timestamp, temperature, humidity, rssi);
+    }
+
+    server.sendHeader("Access-Control-Allow-Origin", "*");
+    server.send(200, "application/json", buffer);
+}
+
 static void handle_records() {
     xSemaphoreTake(storage_mutex, portMAX_DELAY);
 
@@ -85,6 +112,7 @@ static void handle_trim_records() {
 static void server_task(void *) {
     sleep(5000); // waits for initialization
 
+    server.on("/api", handle_api);
     server.on("/records", handle_records);
     server.on("/trim_records", handle_trim_records);
     server.begin();
