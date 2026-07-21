@@ -93,8 +93,8 @@ function updateDeviceCard(device, data) {
     const card = document.getElementById(`device-${device.id}`);
     if (!card) return;
 
-    device.temperature = data.temperature;
-    device.humidity = data.humidity;
+    device.temperature = data.temperature ?? NaN;
+    device.humidity = data.humidity ?? NaN;
     device.timestamp = data.timestamp;
     device.rssi = data.rssi;
     device.online = true;
@@ -104,8 +104,8 @@ function updateDeviceCard(device, data) {
         timeStyle: "medium",
     });
 
-    card.querySelector(".temp-value").textContent = `${data.temperature.toFixed(1)} °C`;
-    card.querySelector(".humi-value").textContent = `${data.humidity.toFixed(1)} %`;
+    card.querySelector(".temp-value").textContent = `${device.temperature.toFixed(1)} °C`;
+    card.querySelector(".humi-value").textContent = `${device.humidity.toFixed(1)} %`;
 
     const remote = new Date(data.timestamp * 1000);
     card.querySelector(".remote-value").textContent = formatter.format(remote);
