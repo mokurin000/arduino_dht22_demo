@@ -27,6 +27,7 @@ static void logger_task(void *) {
 
         if (isnanf(temperature) || isnanf(humidity)) {
             delay(2000); // wait for new value
+            Serial.println("[WARN] Skip record persist: NaN");
             continue;
         }
 
@@ -43,8 +44,15 @@ static void logger_task(void *) {
         File f = LittleFS.open(RECORDS_FILE, FILE_APPEND);
         if (f) {
             record r = {(uint64_t)now, temperature, humidity};
-            f.write((uint8_t *)&r, sizeof(r));
+            size_t n = f.write((uint8_t *)&r, sizeof(r));
+
+            if (n != sizeof(r)) {
+                Serial.println("[WARN] Skip record persist: no space left");
+            }
+
             f.close();
+        } else {
+            Serial.println("[WARN] Open file failed!");
         }
 
         xSemaphoreGive(storage_mutex);
