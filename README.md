@@ -4,6 +4,10 @@ DHT22 Temperature & Relative Humidity monitor.
 
 This project features a [web dashboard](https://mokurin000.github.io/arduino_dht22_demo).
 
+> [!WARNING]
+> This repo is deprecated, please check [DHT22-IoT](https://github.com/mokurin000/DHT22-IoT)
+> for the refactored source tree based on ESP-IDF, featuring WiFi provisioning.
+
 ## Hardware requirement
 
 > [!WARNING]
@@ -12,6 +16,7 @@ This project features a [web dashboard](https://mokurin000.github.io/arduino_dht
 > you need to modify it to take advantage.
 >
 > By default, the device is capable to store data standalone for about four months.
+> 
 > Also, it refuses to persist records until RTC has time after `2026-01-01`.
 
 - ESP32 or ESP32C3 board, 4MiB flash or more.
