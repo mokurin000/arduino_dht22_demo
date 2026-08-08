@@ -4,9 +4,6 @@ DHT22 Temperature & Relative Humidity monitor.
 
 This project features a [web dashboard](https://mokurin000.github.io/arduino_dht22_demo).
 
-> [!WARNING]
-> This repo is deprecated, please check [DHT22-IoT](https://github.com/mokurin000/DHT22-IoT)
-> for the refactored source tree based on ESP-IDF, featuring WiFi provisioning.
 
 ## Hardware requirement
 
